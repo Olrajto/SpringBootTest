@@ -22,7 +22,7 @@ public class CombustionController {
         this.combustionApi = combustionApi;
     }
 
-    @RequestMapping(value = "/oombustion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/combustion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getAllCars(){
         return ResponseEntity.ok().body(combustionApi.getAllCombustionData());
     }
@@ -35,7 +35,6 @@ public class CombustionController {
 
     @RequestMapping(value = "/combustion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getCars(@RequestBody CombustionRequestDTO combustionRequestDTO){
-        combustionApi.getCombustion(combustionRequestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(combustionApi.getCombustion(combustionRequestDTO));
     }
 }
