@@ -1,8 +1,7 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.FuelType;
 import lombok.Data;
-
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -22,6 +21,7 @@ public class Combustion {
     private Integer value;
 
     @Column(name = "fuel_type")
-    private String fuelType;
+    @Enumerated(EnumType.STRING)
+    private FuelType fuelType;
 
 }
