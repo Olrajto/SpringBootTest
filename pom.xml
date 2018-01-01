@@ -61,6 +61,18 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.40</version>
         </dependency>
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<version>3.7.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.mysema.querydsl/querydsl-jpa -->
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+			<version>3.7.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -73,9 +85,28 @@
 		<plugins>
 
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.0.9</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<processors>
+								<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+								<processor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</processor>
+							</processors>
+							<options>
+								<querydsl.entityAccessors>true</querydsl.entityAccessors>
+							</options>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
+
 
 		</plugins>
 	</build>

@@ -19,15 +19,15 @@ public class CombustionApi {
 
     private final CombustionRepository combustionRepository;
     private final CombustionMapper combustionMapper;
+    private final CombustionFinder combustionFinder;
 
     public void deleteCombustion(CombustionRequestDTO combustionRequestDTO){
        combustionRepository.delete(combustionRepository.findOneById(combustionRequestDTO.getId())
                .orElseThrow(EntityNotFoundException::new));
     }
 
-    public CombustionDTO getCombustion(CombustionRequestDTO combustionRequestDTO) {
-        return combustionMapper.toCombustionDTO(combustionRepository.findOneById(combustionRequestDTO.getId()).
-                orElseThrow(EntityNotFoundException::new));
+    public List<CombustionDTO> getCombustion(CombustionRequestDTO combustionRequestDTO) {
+        return combustionFinder.findCombustion(combustionRequestDTO);
     }
 
     public List<CombustionDTO> getAllCombustionData(){

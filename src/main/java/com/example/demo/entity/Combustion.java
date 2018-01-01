@@ -24,4 +24,7 @@ public class Combustion {
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
 
+    @Column(name = "distance")
+    private Integer distance;
+
 }
