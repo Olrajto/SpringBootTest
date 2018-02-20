@@ -1,7 +1,6 @@
 package com.example.demo.api;
 
 import com.example.demo.dto.CombustionDTO;
-import com.example.demo.dto.CombustionRequestDTO;
 import com.example.demo.entity.QCombustion;
 import com.example.demo.enums.FuelType;
 import com.example.demo.mappers.CombustionMapper;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -22,21 +22,24 @@ public class CombustionFinder {
     private final EntityManager entityManager;
     private final CombustionMapper combustionMapper;
 
-    public List<CombustionDTO> findCombustion(CombustionRequestDTO combustionRequestDTO){
+    public List<CombustionDTO> findCombustion(Integer combustionValue, Integer distance, FuelType fuelType, Date startDate, Date endDate){
 
         QCombustion combustion = QCombustion.combustion;
         JPAQuery query = new JPAQuery(entityManager).from(combustion);
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        if(combustionRequestDTO.getFuelType() != null){
-            booleanBuilder.and(combustion.fuelType.eq(FuelType.valueOf(combustionRequestDTO.getFuelType())));
+        if(fuelType != null){
+            booleanBuilder.and(combustion.fuelType.eq(fuelType));
         }
-        if(combustionRequestDTO.getValue() != null){
-            booleanBuilder.and(combustion.value.eq(combustionRequestDTO.getValue()));
+        if(combustionValue != null){
+            booleanBuilder.and(combustion.value.eq(combustionValue));
         }
-        if(combustionRequestDTO.getStartDate() != null && combustionRequestDTO.getEndDate() != null){
-            booleanBuilder.and(combustion.date.between(combustionRequestDTO.getStartDate(), combustionRequestDTO.getEndDate()));
+        if(startDate != null && endDate != null){
+            booleanBuilder.and(combustion.date.between(startDate, endDate));
+        }
+        if(distance != null){
+            booleanBuilder.and(combustion.distance.eq(distance));
         }
         query.where(booleanBuilder);
 

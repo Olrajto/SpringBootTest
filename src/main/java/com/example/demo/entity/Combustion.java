@@ -3,6 +3,8 @@ package com.example.demo.entity;
 import com.example.demo.enums.FuelType;
 import lombok.Data;
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -26,5 +28,15 @@ public class Combustion {
 
     @Column(name = "distance")
     private Integer distance;
+
+    @Column(name = "combustionValue", precision = 3, scale = 2)
+    private Double combustionValue;
+
+    @PostPersist
+    private void updateCombustionValue(){
+        this.combustionValue = ((double)(this.value * 100) / this.distance);
+        this.date = Date.from(Instant.now());
+    }
+
 
 }

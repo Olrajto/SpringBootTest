@@ -8,6 +8,8 @@ import java.util.Date;
 public class CombustionDTO {
     private Long id;
     private Date date;
+    private Integer distance;
     private String fuelType;
     private Integer value;
+    private Double combustionValue;
 }
